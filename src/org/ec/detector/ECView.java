@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.TreeMap;
 
 import org.ec.bos.ECEvu;
 import org.ec.fit.ECFitPeak;
@@ -38,6 +39,8 @@ public class ECView
     private ArrayList<ECStrip>   stripList;
     private ArrayList<ECFitPeak> peakList;
 
+    private TreeMap<Integer, ECStrip>   stripFullList;
+
     // TODO Need a better way to store this calibration information
     public double[] calEch;
     public double[] calAtten;
@@ -69,6 +72,8 @@ public class ECView
         this.evuList    = new ArrayList<ECEvu>();
         this.stripList  = new ArrayList<ECStrip>();
         this.peakList   = new ArrayList<ECFitPeak>();
+
+        this.stripFullList = new TreeMap<Integer, ECStrip>();
 
         this.calEch     = new double[ECGeneral.MAX_STRIPS];
         this.calAtten   = new double[ECGeneral.MAX_STRIPS];
@@ -117,6 +122,7 @@ public class ECView
     public void addStrip(ECStrip s)
     {
         stripList.add(s);
+        stripFullList.put(s.getID(), s);
     }
 
 
@@ -242,5 +248,18 @@ public class ECView
     public ECViewLabel getLabel()
     {
         return label;
+    }
+
+
+    /**
+     * Get the strip with the given ID.  If the view has no strip registered
+     * with that ID, return null.
+     *
+     * @param id  the ID of the desired strip
+     * @return    the strip with that ID or null
+     */
+    public ECStrip getStrip(int id)
+    {
+        return stripFullList.get(id);
     }
 }

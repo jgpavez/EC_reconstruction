@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import org.ec.detector.ECGeneral;
 import org.ec.detector.ECLayer;
+import org.ec.detector.ECLayerName;
 import org.ec.detector.ECSector;
 import org.ec.detector.ECStrip;
 import org.ec.detector.ECView;
@@ -75,8 +76,9 @@ import org.ec.fit.ECPeakHit;
  */
 public class ECPeaksFinder
 {
-    @SuppressWarnings("unused")
-    private ECSector  sector;
+    private ECLayer   whole;
+    private ECLayer   inner;
+    private ECLayer   outer;
     private ECHitMaps map;
 
     private int maxStrips;
@@ -93,7 +95,9 @@ public class ECPeaksFinder
      */
     public ECPeaksFinder(ECSector sector, ECHitMaps map)
     {
-        this.sector = sector;
+        this.whole  = sector.getLayer(ECLayerName.WHOLE);
+        this.inner  = sector.getLayer(ECLayerName.WHOLE);
+        this.outer  = sector.getLayer(ECLayerName.WHOLE);
         this.map    = map;
 
         this.maxStrips = 0;
@@ -127,7 +131,7 @@ public class ECPeaksFinder
      * Correct the the peak energies in all the views of the layer.  This is
      * the second section of the algorithm.  See the class documentation.  The
      * service needs to call first the {@link ECHitsFinder#findHits findHits}
-     * method to get all the posible hits from the found peaks.
+     * method to get all the possible hits from the found peaks.
      *
      * @param layer  the layer object with the data
      * @see          ECLayer
@@ -135,7 +139,7 @@ public class ECPeaksFinder
     public void correctPeaks(ECLayer layer)
     {
         for (ECView view : layer.getViewList()) {
-            attenuationLenght(view);
+            attenuationLenght(layer, view);
         }
     }
 
@@ -153,7 +157,6 @@ public class ECPeaksFinder
         } else if (ECGeneral.TOUCH_ID > 0) {
             for (ECStrip strip : view.getStripList()) {
                 if (strip.getID() <= 0 || strip.getID() >= maxStrips)
-                    // TODO Use recmes function to print error
                     // Bad strip ID
                     continue;
                 if (strip.getEnergy() > ECGeneral.STRIP_THRESHOLD) {
@@ -238,13 +241,12 @@ public class ECPeaksFinder
     }
 
 
-    private void attenuationLenght(ECView view)
+    private void attenuationLenght(ECLayer layer, ECView view)
     {
         for (ECFitPeak peak : view.getPeakList()) {
             if (map.getNHits(peak) > 0) {
                 double shortestPath = 1000;
                 double highestAdc   = 0;
-                @SuppressWarnings("unused")
                 int    highestAdcID = 0;
 
                 for (ECPeakHit hit : map.getHitList(peak)) {
@@ -263,21 +265,77 @@ public class ECPeaksFinder
                 }
 
                 for (ECPeakHit hit : map.getHitList(peak)) {
-                    @SuppressWarnings("unused")
                     double path       = hit.getPath();
                     double sumEprj    = 0;
                     double sumEprj2   = 0;
                     double sumEprj3   = 0;
                     double sumEprj4   = 0;
                     double sumWeights = 0;
+                    double timingWe   = 0;
 
-                    // TODO iterate over strips
+                    double[] hitStripE = new double[maxStrips];
+                    double[] hitStripT = new double[maxStrips];
 
+                    for (ECStrip strip : peak.getStripList()) {
+                        int stripIndex = strip.getID();
+
+                        if (layer == whole) {
+                            double einn_whole = 0;
+                            double eout_whole = 0;
+
+                            // In the following, possible negative energies are eliminated because
+                            // inner and outer strips are summed together.
+
+                            ECView viewInner   = inner.getView(view.getLabel());
+                            ECStrip stripInner = viewInner.getStrip(stripIndex);
+                            if (stripInner != null && stripInner.getEnergy() > 0) {
+                                einn_whole = stripInner.getEnergy() *
+                                             Math.exp(path * viewInner.calAtten[stripIndex]);
+                            }
+
+                            ECView viewOuter   = outer.getView(view.getLabel());
+                            ECStrip stripOuter = viewOuter.getStrip(stripIndex);
+                            if (stripOuter != null && stripOuter.getEnergy() > 0) {
+                                eout_whole = stripOuter.getEnergy() *
+                                             Math.exp(path * viewOuter.calAtten[stripIndex]);
+                            }
+
+                            hitStripE[stripIndex] = einn_whole + eout_whole;
+                        } else {
+                            double atl           = view.calAtten[stripIndex];
+                            hitStripE[stripIndex] = strip.getEnergy() * Math.exp(path / atl);
+                        }
+
+                        double hitEnergy = hit.getEnergy() + hitStripE[stripIndex];
+                        hit.setEnergy(hitEnergy);
+
+                        // In the following, bad TDC values have been flagged with the value -999
+                        // Don't include these in the weighted time average
+
+                        if (stripIndex > highestAdcID && layer != whole) {
+                            hitStripT[stripIndex] = strip.getTime() +
+                                               view.caldT1[stripIndex] * Math.pow(shortestPath, 2) +
+                                               view.caldT2[stripIndex] * Math.pow(shortestPath, 3) -
+                                               shortestPath / ECGeneral.SPEED_IN_PLASTIC;
+
+                            double hitTime = hit.getTime() + hitStripT[stripIndex] *
+                                                              Math.sqrt(strip.getRawAdcs()) /
+                                                              view.calTrms[stripIndex];
+                            hit.setTime(hitTime);
+
+                            timingWe = hit.getTimeWe() + Math.sqrt(strip.getRawAdcs()) /
+                                                         view.calTrms[stripIndex];
+                        }
+                    }
+                    hit.setTimeWe(timingWe);
+
+                    // 11/05/07: Overflow
                     if (sumWeights < 1E-6) sumWeights = 1E-6;
                     if (sumWeights > 1E6)  sumWeights = 1E6;
 
                     double cntrd = sumEprj / sumWeights;
 
+                    // Set RMS width
                     double width;
                     if (peak.getNStrips() > 1) {
                         double width2 = sumEprj2 / sumWeights - cntrd * cntrd;
@@ -290,7 +348,8 @@ public class ECPeaksFinder
                     sumEprj2 = 0;
                     sumEprj4 = 0;
                     for (ECStrip strip : peak.getStripList()) {
-                        double dE = strip.getEnergy();
+                        int stripIndex = strip.getID();
+                        double dE = hitStripE[stripIndex];
                         if (ECGeneral.LN_WEIGHTS) {
                             if (dE > 10000)
                                 dE = Math.log(10000 * dE);
