@@ -5,10 +5,10 @@ import org.jlab.coda.clara.core.ICService;
 
 import org.ec.bos.ECEvu;
 import org.ec.detector.ECLayer;
+import org.ec.detector.ECLayerName;
 import org.ec.detector.ECSector;
 import org.ec.detector.ECStrip;
 import org.ec.detector.ECView;
-import org.ec.detector.base.ECLayerName;
 
 public class ECCalStripsService implements ICService{
 	
