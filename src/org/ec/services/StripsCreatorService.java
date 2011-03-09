@@ -12,7 +12,7 @@ import org.jlab.coda.clara.core.CServiceParameter;
 import org.jlab.coda.clara.core.ICService;
 
 
-public class ECCalStripsService implements ICService
+public class StripsCreatorService implements ICService
 {
     public void configure(CServiceParameter arg0)
     {
