@@ -19,21 +19,12 @@ import org.jlab.coda.clara.core.ICService;
 public class MatchFinderService implements ICService
 {
 
-    /* (non-Javadoc)
-     * @see org.jlab.coda.clara.core.ICService#configure(org.jlab.coda.clara.core.CServiceParameter)
-     */
-    @Override
     public void configure(CServiceParameter arg0)
     {
         // TODO Auto-generated method stub
-
     }
 
 
-    /* (non-Javadoc)
-     * @see org.jlab.coda.clara.core.ICService#executeService(int, java.lang.Object)
-     */
-    @Override
     public Object executeService(int arg0, Object arg1)
     {
         ECSector      sector = (ECSector) arg1;
@@ -47,10 +38,6 @@ public class MatchFinderService implements ICService
     }
 
 
-    /* (non-Javadoc)
-     * @see org.jlab.coda.clara.core.ICService#executeService(int[], java.lang.Object[])
-     */
-    @Override
     public Object executeService(int[] arg0, Object[] arg1)
     {
         // TODO Auto-generated method stub
@@ -58,10 +45,6 @@ public class MatchFinderService implements ICService
     }
 
 
-    /* (non-Javadoc)
-     * @see org.jlab.coda.clara.core.ICService#getAuthor()
-     */
-    @Override
     public String getAuthor()
     {
         // TODO Auto-generated method stub
@@ -69,10 +52,6 @@ public class MatchFinderService implements ICService
     }
 
 
-    /* (non-Javadoc)
-     * @see org.jlab.coda.clara.core.ICService#getDescription()
-     */
-    @Override
     public String getDescription()
     {
         // TODO Auto-generated method stub
@@ -80,10 +59,6 @@ public class MatchFinderService implements ICService
     }
 
 
-    /* (non-Javadoc)
-     * @see org.jlab.coda.clara.core.ICService#getInputType()
-     */
-    @Override
     public int getInputType()
     {
         // TODO Auto-generated method stub
@@ -91,10 +66,6 @@ public class MatchFinderService implements ICService
     }
 
 
-    /* (non-Javadoc)
-     * @see org.jlab.coda.clara.core.ICService#getInputTypes()
-     */
-    @Override
     public int[] getInputTypes()
     {
         // TODO Auto-generated method stub
@@ -102,10 +73,6 @@ public class MatchFinderService implements ICService
     }
 
 
-    /* (non-Javadoc)
-     * @see org.jlab.coda.clara.core.ICService#getName()
-     */
-    @Override
     public String getName()
     {
         // TODO Auto-generated method stub
@@ -113,10 +80,6 @@ public class MatchFinderService implements ICService
     }
 
 
-    /* (non-Javadoc)
-     * @see org.jlab.coda.clara.core.ICService#getOutputType()
-     */
-    @Override
     public int getOutputType()
     {
         // TODO Auto-generated method stub
@@ -124,10 +87,6 @@ public class MatchFinderService implements ICService
     }
 
 
-    /* (non-Javadoc)
-     * @see org.jlab.coda.clara.core.ICService#getVersion()
-     */
-    @Override
     public String getVersion()
     {
         // TODO Auto-generated method stub

@@ -76,54 +76,46 @@ public class StripsCreatorService implements ICService
     }
 
 
-    @Override
     public Object executeService(int[] arg0, Object[] arg1) {
         // TODO Auto-generated method stub
         return null;
     }
 
 
-    @Override
     public String getAuthor() {
         return "Ricardo Oyarzun";
     }
 
 
-    @Override
     public String getDescription() {
         // TODO Auto-generated method stub
         return null;
     }
 
 
-    @Override
     public int getInputType() {
         // TODO Auto-generated method stub
         return 0;
     }
 
 
-    @Override
     public int[] getInputTypes() {
         // TODO Auto-generated method stub
         return null;
     }
 
 
-    @Override
     public String getName() {
         return "StripsCreatorService";
     }
 
 
-    @Override
     public int getOutputType() {
         // TODO Auto-generated method stub
         return 0;
     }
 
 
-    @Override
     public String getVersion() {
         return "0.1";
     }
