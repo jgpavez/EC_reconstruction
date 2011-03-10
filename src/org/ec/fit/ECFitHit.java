@@ -68,7 +68,8 @@ public class ECFitHit
         this.width   = 0;
         this.time    = 0;
         this.ch2     = 0;       // Should be used outside, or with a different initial value?
-        this.nStrips = 0;
+
+        this.nStrips = u.getNStrips() + v.getNStrips() + w.getNStrips();
 
         initializeCoordinates();
 
@@ -377,16 +378,6 @@ public class ECFitHit
             return faceCoordinates.get(axis);
         else
             return 0.0;
-    }
-
-
-    /**
-     * Set the number of strips of the hit.
-     *
-     * @param n  the number of strips
-     */
-    public void setNStrips(int n) {
-        nStrips = n;
     }
 
 

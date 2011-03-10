@@ -295,20 +295,7 @@ public class ECHitsFinder
         sortHits(layer);
         
         for (ECFitHit hit : layer.getHitList()) {
-            int ntstripc = hit.getNStrips();
-            for (ECPeakHit ph : hit.getAllPeakHits()) {
-                int nstripc  = ph.getPeak().getNStrips();
-                ntstripc += nstripc;
-                
-                // TODO Can this be moved to PeakHit constructor?
-                ph.setNStrips(nstripc);
-                
-                // TODO Iterate over strips
-            }
-            
-            // TODO Can this be moved to constructors?
-            hit.setNStrips(ntstripc);
-                
+            // TODO Iterate over strips
             
             // TODO Find where the hell coord. k is set
             ECCoordTransfer ct = new ECCoordTransfer(sector,

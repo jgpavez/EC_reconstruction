@@ -67,7 +67,7 @@ public class ECPeakHit
         this.width       = 0;
         this.dist        = 0;
 
-        this.nStrips     = 0;
+        this.nStrips     = peak.getNStrips();
 
         // Create the list of the moments
         moments = new HashMap<Integer, Double>();
@@ -293,17 +293,6 @@ public class ECPeakHit
             return moments.get(nth);
         else
             return 0.0;
-    }
-
-
-    /**
-     * Get the number of strips  of the hit in this axis.
-     *
-     * @param number  the number to set
-     */
-    public void setNStrips(int number)
-    {
-        nStrips = number;
     }
 
 
