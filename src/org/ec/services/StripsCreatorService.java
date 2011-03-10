@@ -88,8 +88,7 @@ public class StripsCreatorService implements ICService
 
 
     public String getDescription() {
-        // TODO Auto-generated method stub
-        return null;
+        return "Changes TDC and ADC to energy and time";
     }
 
 

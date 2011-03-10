@@ -47,15 +47,13 @@ public class MatchFinderService implements ICService
 
     public String getAuthor()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "Sebastián Mancilla";
     }
 
 
     public String getDescription()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "Find matches of hits between layers";
     }
 
 
@@ -75,8 +73,7 @@ public class MatchFinderService implements ICService
 
     public String getName()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "MatchFinder";
     }
 
 
@@ -89,8 +86,7 @@ public class MatchFinderService implements ICService
 
     public String getVersion()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "0.1";
     }
 
 }

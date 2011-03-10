@@ -72,15 +72,13 @@ public class HitsFinderService implements ICService
 
     public String getAuthor()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "Sebastián Mancilla";
     }
 
 
     public String getDescription()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "Find the hits in one sector";
     }
 
 
@@ -100,8 +98,7 @@ public class HitsFinderService implements ICService
 
     public String getName()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "HitsFinder";
     }
 
 
@@ -114,8 +111,7 @@ public class HitsFinderService implements ICService
 
     public String getVersion()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "0.1";
     }
 
 }
