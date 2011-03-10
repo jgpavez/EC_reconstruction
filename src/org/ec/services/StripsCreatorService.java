@@ -12,6 +12,17 @@ import org.jlab.coda.clara.core.CServiceParameter;
 import org.jlab.coda.clara.core.ICService;
 
 
+/**
+ * The <code>StripsCreatorService</code> changes TDC and ADC to energy and time.
+ * <p>
+ * <font size = 1>JSA: Thomas Jefferson National Accelerator Facility<br>
+ * This software was developed under a United States Government license,<br>
+ * described in the NOTICE file included as part of this distribution.<br>
+ * Copyright (c), Feb 25, 2011</font>
+ *
+ * @author      royarzun
+ * @version     0.1
+ */
 public class StripsCreatorService implements ICService
 {
     public void configure(CServiceParameter arg0)
@@ -74,7 +85,6 @@ public class StripsCreatorService implements ICService
 
     @Override
     public String getAuthor() {
-        // TODO Auto-generated method stub
         return "Ricardo Oyarzun";
     }
 
@@ -102,8 +112,7 @@ public class StripsCreatorService implements ICService
 
     @Override
     public String getName() {
-        // TODO Auto-generated method stub
-        return "ECCalStripService";
+        return "StripsCreatorService";
     }
 
 
@@ -116,7 +125,6 @@ public class StripsCreatorService implements ICService
 
     @Override
     public String getVersion() {
-        // TODO Auto-generated method stub
-        return "1.0";
+        return "0.1";
     }
 }
