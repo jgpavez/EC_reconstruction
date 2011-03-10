@@ -30,12 +30,12 @@ import java.util.TreeMap;
 public class ECSector
 {
     private int ID;
-    private TreeMap<ECLayerName, ECLayer> layerList;
+    private TreeMap<ECLayer.Name, ECLayer> layerList;
 
     private double phi;
     private HashMap<String, Double> origins;
 
-    private TreeMap<ECLayerName, TreeMap<ECLayerName, Integer>> nmatch;
+    private TreeMap<ECLayer.Name, TreeMap<ECLayer.Name, Integer>> nmatch;
 
     /**
      * Construct an object representing the EC sector with the given ID.
@@ -57,16 +57,16 @@ public class ECSector
         origins.put("z", 0.0);
 
         // Create the layer list
-        this.layerList = new TreeMap<ECLayerName, ECLayer>();
-        for (ECLayerName name : ECLayerName.values()) {
+        this.layerList = new TreeMap<ECLayer.Name, ECLayer>();
+        for (ECLayer.Name name : ECLayer.Name.values()) {
             layerList.put(name, new ECLayer(name, id));
         }
 
-        this.nmatch = new TreeMap<ECLayerName, TreeMap<ECLayerName,Integer>>();
-        for (ECLayerName n1 : ECLayerName.values()) {
-            TreeMap<ECLayerName, Integer> secondKey = new TreeMap<ECLayerName, Integer>();
+        this.nmatch = new TreeMap<ECLayer.Name, TreeMap<ECLayer.Name,Integer>>();
+        for (ECLayer.Name n1 : ECLayer.Name.values()) {
+            TreeMap<ECLayer.Name, Integer> secondKey = new TreeMap<ECLayer.Name, Integer>();
             nmatch.put(n1, secondKey);
-            for (ECLayerName n2 : ECLayerName.values())
+            for (ECLayer.Name n2 : ECLayer.Name.values())
                 if (n1 != n2) nmatch.get(n1).put(n2, 0);
         }
     }
@@ -91,7 +91,7 @@ public class ECSector
      * @return      the desired layer
      * @see         ECLayer
      */
-    public ECLayer getLayer(ECLayerName name)
+    public ECLayer getLayer(ECLayer.Name name)
     {
         return layerList.get(name);
     }
@@ -162,7 +162,7 @@ public class ECSector
      *
      * @return  the number of matches between layers
      */
-    public int getNmatch(ECLayerName l1, ECLayerName l2)
+    public int getNmatch(ECLayer.Name l1, ECLayer.Name l2)
     {
         return nmatch.get(l1).get(l2);
     }

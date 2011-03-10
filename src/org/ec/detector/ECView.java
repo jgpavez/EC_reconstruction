@@ -31,9 +31,14 @@ import org.ec.fit.ECFitPeak;
  */
 public class ECView
 {
-    private ECViewLabel label;
-    private String      key;
-    private double      length;
+    public enum Label
+    {
+        U, V, W;
+    }
+
+    private Label   label;
+    private String  key;
+    private double  length;
 
     private ArrayList<ECEvu>     evuList;
     private ArrayList<ECStrip>   stripList;
@@ -65,7 +70,7 @@ public class ECView
      * @param label     the label identifying the view
      * @param layerKey  the key of the layer that the view belongs
      */
-    public ECView(ECViewLabel label, String layerKey)
+    public ECView(ECView.Label label, String layerKey)
     {
         this.label      = label;
         this.key        = layerKey + "." + label;
@@ -245,7 +250,7 @@ public class ECView
      *
      * @return  the label of the view.
      */
-    public ECViewLabel getLabel()
+    public ECView.Label getLabel()
     {
         return label;
     }

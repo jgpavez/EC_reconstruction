@@ -5,7 +5,6 @@ import org.jlab.coda.clara.core.ICService;
 
 import org.ec.detector.ECGeneral;
 import org.ec.detector.ECLayer;
-import org.ec.detector.ECLayerName;
 import org.ec.detector.ECSector;
 import org.ec.util.ECHitMaps;
 import org.ec.util.ECHitsFinder;
@@ -38,7 +37,7 @@ public class HitsFinderService implements ICService
         ECHitsFinder  pth    = new ECHitsFinder(sector, maps);
 
         for (ECLayer layer : sector.getLayerList()) {
-            if (layer.getName() == ECLayerName.COVER) {
+            if (layer.getName() == ECLayer.Name.COVER) {
                 layer.setMaxStrips(ECGeneral.MAX_EC_STRIPS);
             } else {
                 layer.setMaxStrips(ECGeneral.MAX_PCAL_STRIPS);

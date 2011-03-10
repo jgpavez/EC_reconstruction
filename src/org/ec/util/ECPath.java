@@ -1,7 +1,7 @@
 package org.ec.util;
 
 import org.ec.detector.ECLayer;
-import org.ec.detector.ECViewLabel;
+import org.ec.detector.ECView;
 
 /**
  * Class to find the distance parallel to strips to edge from
@@ -32,9 +32,9 @@ public class ECPath
      */
     public ECPath(ECLayer layer, double i, double j)
     {
-        double lu = layer.getEdgeL(ECViewLabel.U);
-        double lv = layer.getEdgeL(ECViewLabel.V);
-        double lw = layer.getEdgeL(ECViewLabel.W);
+        double lu = layer.getEdgeL(ECView.Label.U);
+        double lv = layer.getEdgeL(ECView.Label.V);
+        double lw = layer.getEdgeL(ECView.Label.W);
 
         double h  = Math.sqrt(lu * lu - lv * lv / 4);
         double h1 = layer.getH1();

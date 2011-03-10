@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 import org.ec.detector.ECLayer;
-import org.ec.detector.ECLayerName;
-import org.ec.detector.ECViewLabel;
+import org.ec.detector.ECView;
 
 
 /**
@@ -39,10 +38,10 @@ public class ECFitHit
     private HashMap<String, Double> localCoordinates;
     private HashMap<String, Double> faceCoordinates;
 
-    private TreeMap<ECViewLabel, ECPeakHit> peakHitList;
+    private TreeMap<ECView.Label, ECPeakHit> peakHitList;
 
-    private TreeMap<ECLayerName, ECFitHit>  matched;
-    private TreeMap<ECLayerName, Double>    c2matched;
+    private TreeMap<ECLayer.Name, ECFitHit>  matched;
+    private TreeMap<ECLayer.Name, Double>    c2matched;
 
     private int nStrips;
 
@@ -74,18 +73,18 @@ public class ECFitHit
         initializeCoordinates();
 
         // Create PeakHit objects
-        peakHitList = new TreeMap<ECViewLabel, ECPeakHit>();
+        peakHitList = new TreeMap<ECView.Label, ECPeakHit>();
 
-        peakHitList.put(ECViewLabel.U, new ECPeakHit(this, u));
-        peakHitList.put(ECViewLabel.V, new ECPeakHit(this, v));
-        peakHitList.put(ECViewLabel.W, new ECPeakHit(this, w));
+        peakHitList.put(ECView.Label.U, new ECPeakHit(this, u));
+        peakHitList.put(ECView.Label.V, new ECPeakHit(this, v));
+        peakHitList.put(ECView.Label.W, new ECPeakHit(this, w));
 
         // Create matched sets
-        matched   = new TreeMap<ECLayerName, ECFitHit>();
-        c2matched = new TreeMap<ECLayerName, Double>();
+        matched   = new TreeMap<ECLayer.Name, ECFitHit>();
+        c2matched = new TreeMap<ECLayer.Name, Double>();
 
-        ECLayerName layerName = layer.getName();
-        for (ECLayerName name : ECLayerName.values()) {
+        ECLayer.Name layerName = layer.getName();
+        for (ECLayer.Name name : ECLayer.Name.values()) {
             if (name != layerName) {
                 matched.put(name, null);
                 c2matched.put(name, 0.0);
@@ -136,9 +135,9 @@ public class ECFitHit
      */
     public void setPaths(double u, double v, double w)
     {
-        peakHitList.get(ECViewLabel.U).setPath(u);
-        peakHitList.get(ECViewLabel.V).setPath(v);
-        peakHitList.get(ECViewLabel.W).setPath(w);
+        peakHitList.get(ECView.Label.U).setPath(u);
+        peakHitList.get(ECView.Label.V).setPath(v);
+        peakHitList.get(ECView.Label.W).setPath(w);
     }
 
 
@@ -148,7 +147,7 @@ public class ECFitHit
      * @param view  the desired view
      * @return      a {@link ECPeakHit} object with the view information
      */
-    public ECPeakHit getPeakHit(ECViewLabel view)
+    public ECPeakHit getPeakHit(ECView.Label view)
     {
         return peakHitList.get(view);
     }

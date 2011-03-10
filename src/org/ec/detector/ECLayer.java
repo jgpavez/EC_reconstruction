@@ -32,10 +32,15 @@ import org.ec.fit.ECFitPeak;
  */
 public class ECLayer
 {
-    private String      key;
-    private ECLayerName name;
+    public enum Name
+    {
+        WHOLE, INNER, OUTER, COVER;
+    }
 
-    private TreeMap<ECViewLabel, ECView> viewList;
+    private String key;
+    private Name   name;
+
+    private TreeMap<ECView.Label, ECView> viewList;
     private ArrayList<ECFitHit> hitList;
 
     private double energy;
@@ -60,7 +65,7 @@ public class ECLayer
      * @see             ECView
      * @see             ECFitHit
      */
-    public ECLayer(ECLayerName name, int sectorID)
+    public ECLayer(ECLayer.Name name, int sectorID)
     {
         this.name   = name;
         this.key    = "S" + sectorID + "." + name;
@@ -68,10 +73,10 @@ public class ECLayer
         this.energy = 0.0;
 
         // Create the list of views and hits
-        viewList = new TreeMap<ECViewLabel, ECView>();
+        viewList = new TreeMap<ECView.Label, ECView>();
         hitList  = new ArrayList<ECFitHit>();
 
-        for (ECViewLabel label : ECViewLabel.values()) {
+        for (ECView.Label label : ECView.Label.values()) {
             viewList.put(label, new ECView(label, this.key));
         }
     }
@@ -96,7 +101,7 @@ public class ECLayer
      * @return       the desired view
      * @see          ECView
      */
-    public ECView getView(ECViewLabel label)
+    public ECView getView(ECView.Label label)
     {
         return viewList.get(label);
     }
@@ -199,7 +204,7 @@ public class ECLayer
      * @param view  the desired side
      * @return      the length of the side
      */
-    public double getEdgeL(ECViewLabel view)
+    public double getEdgeL(ECView.Label view)
     {
         return viewList.get(view).getLength();
     }
@@ -342,7 +347,7 @@ public class ECLayer
      *
      * @return The name of the layer.
      */
-    public ECLayerName getName()
+    public ECLayer.Name getName()
     {
         return name;
     }

@@ -4,11 +4,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import org.ec.detector.ECGeneral;
-import org.ec.detector.ECLayer;
-import org.ec.detector.ECLayerName;
 import org.ec.detector.ECSector;
+import org.ec.detector.ECLayer;
 import org.ec.detector.ECView;
-import org.ec.detector.ECViewLabel;
 import org.ec.fit.ECFitHit;
 import org.ec.fit.ECFitPeak;
 import org.ec.fit.ECPeakHit;
@@ -106,9 +104,9 @@ public class ECHitsFinder
      */
     public void findHits(ECLayer layer)
     {
-        for (ECFitPeak pu : layer.getView(ECViewLabel.U).getPeakList()) {
-            for (ECFitPeak pv : layer.getView(ECViewLabel.V).getPeakList()) {
-                for (ECFitPeak pw : layer.getView(ECViewLabel.W).getPeakList()) {
+        for (ECFitPeak pu : layer.getView(ECView.Label.U).getPeakList()) {
+            for (ECFitPeak pv : layer.getView(ECView.Label.V).getPeakList()) {
+                for (ECFitPeak pw : layer.getView(ECView.Label.W).getPeakList()) {
                     if (getPeakStatus(pu, pv, pw) == 0) {
                         ECDalitz dalitz = new ECDalitz(layer, pu, pv, pw, 1);
                         
@@ -219,14 +217,14 @@ public class ECHitsFinder
         if (hitCount == 0) {
             for (ECFitHit hit1 : layer.getHitList()) {
                 for (ECFitHit hit2 : layer.getHitList(hit1.getID())) {
-                    ECFitPeak u1 = hit1.getPeakHit(ECViewLabel.U).getPeak();
-                    ECFitPeak u2 = hit2.getPeakHit(ECViewLabel.U).getPeak();
+                    ECFitPeak u1 = hit1.getPeakHit(ECView.Label.U).getPeak();
+                    ECFitPeak u2 = hit2.getPeakHit(ECView.Label.U).getPeak();
                     
-                    ECFitPeak v1 = hit1.getPeakHit(ECViewLabel.V).getPeak();
-                    ECFitPeak v2 = hit2.getPeakHit(ECViewLabel.V).getPeak();
+                    ECFitPeak v1 = hit1.getPeakHit(ECView.Label.V).getPeak();
+                    ECFitPeak v2 = hit2.getPeakHit(ECView.Label.V).getPeak();
                     
-                    ECFitPeak w1 = hit1.getPeakHit(ECViewLabel.W).getPeak();
-                    ECFitPeak w2 = hit2.getPeakHit(ECViewLabel.W).getPeak();
+                    ECFitPeak w1 = hit1.getPeakHit(ECView.Label.W).getPeak();
+                    ECFitPeak w2 = hit2.getPeakHit(ECView.Label.W).getPeak();
                     
                     if (u1.getID() == u2.getID()) hitCount++;
                     if (v1.getID() == v2.getID()) hitCount++;
@@ -270,7 +268,7 @@ public class ECHitsFinder
                 timeWe += ph.getTimeWe();
             }
             
-            if (layer.getName() != ECLayerName.WHOLE && timeWe > 0)
+            if (layer.getName() != ECLayer.Name.WHOLE && timeWe > 0)
                 time = time / timeWe;
             else
                 time = -999;
@@ -278,9 +276,9 @@ public class ECHitsFinder
             hit.setEnergy(energy);
             hit.setTime(time);
             
-            ECFitPeak u = hit.getPeakHit(ECViewLabel.U).getPeak();
-            ECFitPeak v = hit.getPeakHit(ECViewLabel.V).getPeak();
-            ECFitPeak w = hit.getPeakHit(ECViewLabel.W).getPeak();
+            ECFitPeak u = hit.getPeakHit(ECView.Label.U).getPeak();
+            ECFitPeak v = hit.getPeakHit(ECView.Label.V).getPeak();
+            ECFitPeak w = hit.getPeakHit(ECView.Label.W).getPeak();
             
             ECDalitz dalitz = new ECDalitz(layer, u, v, w, 2);
             
@@ -381,9 +379,9 @@ public class ECHitsFinder
      */
     public void initializePeakStatus(ECLayer layer)
     {
-        for (ECFitPeak u : layer.getView(ECViewLabel.U).getPeakList())
-            for (ECFitPeak v : layer.getView(ECViewLabel.V).getPeakList())
-                for (ECFitPeak w : layer.getView(ECViewLabel.W).getPeakList())
+        for (ECFitPeak u : layer.getView(ECView.Label.U).getPeakList())
+            for (ECFitPeak v : layer.getView(ECView.Label.V).getPeakList())
+                for (ECFitPeak w : layer.getView(ECView.Label.W).getPeakList())
                     setPeakStatus(u, v, w, 0);
     }
     

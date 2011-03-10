@@ -2,7 +2,6 @@ package org.ec.util;
 
 import org.ec.detector.ECGeneral;
 import org.ec.detector.ECLayer;
-import org.ec.detector.ECLayerName;
 import org.ec.detector.ECSector;
 import org.ec.fit.ECFitHit;
 
@@ -38,10 +37,10 @@ public class ECMatchFinder
     {
         this.sector = sector;
 
-        whole = sector.getLayer(ECLayerName.WHOLE);
-        inner = sector.getLayer(ECLayerName.INNER);
-        outer = sector.getLayer(ECLayerName.OUTER);
-        cover = sector.getLayer(ECLayerName.COVER);
+        whole = sector.getLayer(ECLayer.Name.WHOLE);
+        inner = sector.getLayer(ECLayer.Name.INNER);
+        outer = sector.getLayer(ECLayer.Name.OUTER);
+        cover = sector.getLayer(ECLayer.Name.COVER);
     }
 
 

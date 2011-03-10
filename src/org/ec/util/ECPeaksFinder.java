@@ -4,7 +4,6 @@ import java.util.Comparator;
 
 import org.ec.detector.ECGeneral;
 import org.ec.detector.ECLayer;
-import org.ec.detector.ECLayerName;
 import org.ec.detector.ECSector;
 import org.ec.detector.ECStrip;
 import org.ec.detector.ECView;
@@ -95,9 +94,9 @@ public class ECPeaksFinder
      */
     public ECPeaksFinder(ECSector sector, ECHitMaps map)
     {
-        this.whole  = sector.getLayer(ECLayerName.WHOLE);
-        this.inner  = sector.getLayer(ECLayerName.WHOLE);
-        this.outer  = sector.getLayer(ECLayerName.WHOLE);
+        this.whole  = sector.getLayer(ECLayer.Name.WHOLE);
+        this.inner  = sector.getLayer(ECLayer.Name.WHOLE);
+        this.outer  = sector.getLayer(ECLayer.Name.WHOLE);
         this.map    = map;
 
         this.maxStrips = 0;

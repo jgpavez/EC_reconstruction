@@ -3,7 +3,7 @@ package org.ec.util;
 import java.util.HashMap;
 
 import org.ec.detector.ECLayer;
-import org.ec.detector.ECViewLabel;
+import org.ec.detector.ECView;
 import org.ec.fit.ECFitPeak;
 
 /**
@@ -48,9 +48,9 @@ public class ECDalitz
         double wv = v.getWidth();
         double ww = w.getWidth();
 
-        double lu = layer.getEdgeL(ECViewLabel.U);
-        double lv = layer.getEdgeL(ECViewLabel.V);
-        double lw = layer.getEdgeL(ECViewLabel.W);
+        double lu = layer.getEdgeL(ECView.Label.U);
+        double lv = layer.getEdgeL(ECView.Label.V);
+        double lw = layer.getEdgeL(ECView.Label.W);
 
         double dalitz   = (du / lu) + (dv / lv) + (dw / lw);
         double dDalitz  = Math.pow(wu / lu, 2) + Math.pow(wv / lv, 2) + Math.pow(ww / lw, 2);
