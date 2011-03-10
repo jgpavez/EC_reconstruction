@@ -95,8 +95,8 @@ public class ECPeaksFinder
     public ECPeaksFinder(ECSector sector, ECHitMaps map)
     {
         this.whole  = sector.getLayer(ECLayer.Name.WHOLE);
-        this.inner  = sector.getLayer(ECLayer.Name.WHOLE);
-        this.outer  = sector.getLayer(ECLayer.Name.WHOLE);
+        this.inner  = sector.getLayer(ECLayer.Name.INNER);
+        this.outer  = sector.getLayer(ECLayer.Name.OUTER);
         this.map    = map;
 
         this.maxStrips = 0;
