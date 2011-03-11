@@ -1,14 +1,14 @@
 package org.ec.services;
 
-import org.jlab.coda.clara.core.CServiceParameter;
-import org.jlab.coda.clara.core.ICService;
-
 import org.ec.detector.ECGeneral;
 import org.ec.detector.ECLayer;
 import org.ec.detector.ECSector;
 import org.ec.util.ECHitMaps;
 import org.ec.util.ECHitsFinder;
 import org.ec.util.ECPeaksFinder;
+import org.jlab.coda.clara.core.CServiceParameter;
+import org.jlab.coda.clara.core.ICService;
+import org.jlab.coda.clara.system.AConstants;
 
 /**
  * The <code>HitsFinderService</code> find the hits in one sector.

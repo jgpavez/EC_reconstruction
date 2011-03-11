@@ -4,6 +4,7 @@ import org.ec.detector.ECSector;
 import org.ec.util.ECMatchFinder;
 import org.jlab.coda.clara.core.CServiceParameter;
 import org.jlab.coda.clara.core.ICService;
+import org.jlab.coda.clara.system.AConstants;
 
 /**
  * The <code>MatchFinderService</code> find matches of hits between layers.

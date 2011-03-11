@@ -7,9 +7,9 @@ import org.ec.detector.ECLayer;
 import org.ec.detector.ECSector;
 import org.ec.detector.ECStrip;
 import org.ec.detector.ECView;
-
 import org.jlab.coda.clara.core.CServiceParameter;
 import org.jlab.coda.clara.core.ICService;
+import org.jlab.coda.clara.system.AConstants;
 
 
 /**
