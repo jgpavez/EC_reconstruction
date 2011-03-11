@@ -1,5 +1,6 @@
 package org.ec.detector;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -29,8 +30,10 @@ import org.ec.fit.ECFitPeak;
  * @see         ECStrip
  * @see         ECFitPeak
  */
-public class ECView
+public class ECView implements Serializable
 {
+    private static final long serialVersionUID = 704856800533008553L;
+
     public enum Label
     {
         U, V, W;

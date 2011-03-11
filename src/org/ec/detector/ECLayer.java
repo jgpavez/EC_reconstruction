@@ -1,5 +1,6 @@
 package org.ec.detector;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -30,8 +31,10 @@ import org.ec.fit.ECFitPeak;
  * @see ECView
  * @see ECFitHit
  */
-public class ECLayer
+public class ECLayer implements Serializable
 {
+    private static final long serialVersionUID = 5088571984700893958L;
+
     public enum Name
     {
         WHOLE, INNER, OUTER, COVER;

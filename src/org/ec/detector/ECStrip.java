@@ -1,5 +1,7 @@
 package org.ec.detector;
 
+import java.io.Serializable;
+
 /**
  * The <code>ECStrip</code> class represents a strip in the EC detector and
  * holds information about it.
@@ -12,8 +14,10 @@ package org.ec.detector;
  * @author      smancill
  * @version     0.1
  */
-public class ECStrip
+public class ECStrip implements Serializable
 {
+    private static final long serialVersionUID = 425222062295755927L;
+
     private int    ID;
     private double energy;
     private double time;

@@ -1,5 +1,6 @@
 package org.ec.fit;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,8 +21,9 @@ import org.ec.detector.ECStrip;
  * @version     0.1
  * @see ECFitHit
  */
-public class ECFitPeak
+public class ECFitPeak implements Serializable
 {
+    private static final long serialVersionUID = -2191795944344085508L;
     private int    ID;
     private String key;
 

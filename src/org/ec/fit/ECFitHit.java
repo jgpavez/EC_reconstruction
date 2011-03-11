@@ -1,5 +1,6 @@
 package org.ec.fit;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -24,8 +25,10 @@ import org.ec.detector.ECView;
  * @version     0.1
  * @see ECPeakHit
  */
-public class ECFitHit
+public class ECFitHit implements Serializable
 {
+    private static final long serialVersionUID = 4895428640410102648L;
+
     private int ID;
 
     private double energy;

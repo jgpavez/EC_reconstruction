@@ -1,5 +1,6 @@
 package org.ec.detector;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -27,8 +28,10 @@ import java.util.TreeMap;
  * @author      smancill
  * @version     0.1
  */
-public class ECSector
+public class ECSector implements Serializable
 {
+    private static final long serialVersionUID = 1800042831232739456L;
+
     private int ID;
     private TreeMap<ECLayer.Name, ECLayer> layerList;
 
