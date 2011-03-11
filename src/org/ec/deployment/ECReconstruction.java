@@ -61,19 +61,18 @@ public class ECReconstruction extends ClaraUser
         }
 
         // Add all services
-        fillStrips  = addService(container, "StripsCreatorService");
-        findHits    = addService(container, "HitsFinderService");
-        findMatches = addService(container, "MatchFinderService");
+        fillStrips  = addService(container, "org.ec.services.StripsCreatorService");
+        findHits    = addService(container, "org.ec.services.HitsFinderService");
+        findMatches = addService(container, "org.ec.services.MatchFinderService");
 
+        // Wait for all services to start
         ArrayList<String> serviceList = new ArrayList<String> ();
         serviceList.add(fillStrips);
         serviceList.add(findHits);
         serviceList.add(findMatches);
 
-        // Wait for all services to start
         TIME_OUT_LIMIT = 40;
         timeout = 0;
-
         boolean allFound = false;
         while (!allFound && timeout < TIME_OUT_LIMIT) {
             for (CServiceRegistration service : getServiceContainer(container).getServices()) {
@@ -83,7 +82,6 @@ public class ECReconstruction extends ClaraUser
                     serviceList.remove(serviceName);
                 }
             }
-
             if (serviceList.size() > 0) {
                 timeout++;
                 waitOneSecond();
