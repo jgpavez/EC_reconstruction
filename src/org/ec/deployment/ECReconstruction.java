@@ -2,6 +2,7 @@ package org.ec.deployment;
 
 import java.util.ArrayList;
 
+import org.ec.detector.ECSector;
 import org.jlab.coda.clara.core.CServiceRegistration;
 import org.jlab.coda.clara.core.ClaraUser;
 
@@ -25,18 +26,34 @@ public class ECReconstruction extends ClaraUser
     private String findHits;
     private String findMatches;
 
+    private ArrayList<ECSector> detector;
 
     public static void main(String[] args)
     {
         ECReconstruction ec = new ECReconstruction();
+
         ec.startServices();
         ec.linkServices();
+        ec.runReconstruction();
     }
 
 
     public ECReconstruction()
     {
+        detector   = new ArrayList<ECSector>();
+        for (int i = 1; i <= 6; i++)
+            detector.add(new ECSector(i));
+
         connect();
+    }
+
+
+    public void runReconstruction()
+    {
+        for (ECSector sector : detector) {
+            requestService(container, fillStrips, sector, sector.getID());
+            System.out.println("Started chain for sector " + sector.getID());
+        }
     }
 
 
