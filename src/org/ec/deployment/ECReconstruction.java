@@ -50,6 +50,8 @@ public class ECReconstruction extends ClaraUser
 
     public void runReconstruction()
     {
+        readBOS();
+
         for (ECSector sector : detector) {
             requestService(container, fillStrips, sector, sector.getID());
             System.out.println("Started chain for sector " + sector.getID());
@@ -116,6 +118,18 @@ public class ECReconstruction extends ClaraUser
     {
         joinServices(container, fillStrips, container, findHits);
         joinServices(container, findHits,   container, findMatches);
+    }
+
+
+    public void readBOS()
+    {
+        // TODO Read the god damned BOS file
+    }
+
+
+    public void fillBOS()
+    {
+        // TODO Fill the output BOS file
     }
 
 
