@@ -1,10 +1,14 @@
 package org.ec.deployment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.ec.detector.ECSector;
+import org.jlab.coda.cMsg.cMsgCallbackAdapter;
+import org.jlab.coda.cMsg.cMsgMessage;
 import org.jlab.coda.clara.core.CServiceRegistration;
 import org.jlab.coda.clara.core.ClaraUser;
+import org.jlab.coda.clara.system.AConstants;
 
 
 /**
@@ -27,6 +31,7 @@ public class ECReconstruction extends ClaraUser
     private String findMatches;
 
     private ArrayList<ECSector> detector;
+    private int recOutputs;
 
     public static void main(String[] args)
     {
@@ -34,6 +39,7 @@ public class ECReconstruction extends ClaraUser
 
         ec.startServices();
         ec.linkServices();
+        ec.subscribeOutput();
         ec.runReconstruction();
     }
 
@@ -43,8 +49,10 @@ public class ECReconstruction extends ClaraUser
         detector   = new ArrayList<ECSector>();
         for (int i = 1; i <= 6; i++)
             detector.add(new ECSector(i));
+        recOutputs = 0;
 
         connect();
+        start();
     }
 
 
@@ -118,6 +126,40 @@ public class ECReconstruction extends ClaraUser
     {
         joinServices(container, fillStrips, container, findHits);
         joinServices(container, findHits,   container, findMatches);
+    }
+
+
+    public void subscribeOutput()
+    {
+        subscribeService(findMatches, new chainCallback());
+    }
+
+
+    private class chainCallback extends cMsgCallbackAdapter
+    {
+        public void callback(cMsgMessage msg, Object userObject)
+        {
+            if (getServiceOutputType(findMatches, false) == AConstants.OBJECT) {
+                try {
+                    if (msg.getByteArray() == null) {
+                        System.out.println("Null data");
+                    }
+                    ECSector sector = (ECSector) me.B2O(msg.getByteArray());
+                    System.out.println(" Callback received of sector " + sector.getID());
+                    detector.set(sector.getID() - 1, sector);
+                    recOutputs++;
+
+                    if (recOutputs == 6) {
+                        fillBOS();
+                        stop();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 
