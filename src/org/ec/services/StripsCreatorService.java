@@ -77,7 +77,6 @@ public class StripsCreatorService implements ICService
 
 
     public Object executeService(int[] arg0, Object[] arg1) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -93,13 +92,11 @@ public class StripsCreatorService implements ICService
 
 
     public int getInputType() {
-        // TODO Auto-generated method stub
-        return 0;
+        return AConstants.OBJECT;
     }
 
 
     public int[] getInputTypes() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -110,8 +107,7 @@ public class StripsCreatorService implements ICService
 
 
     public int getOutputType() {
-        // TODO Auto-generated method stub
-        return 0;
+        return AConstants.OBJECT;
     }
 
 
