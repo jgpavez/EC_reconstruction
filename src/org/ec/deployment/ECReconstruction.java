@@ -97,7 +97,8 @@ public class ECReconstruction extends ClaraUser
 
     public void linkServices()
     {
-        System.out.println("Nothing done yet.");
+        joinServices(container, fillStrips, container, findHits);
+        joinServices(container, findHits,   container, findMatches);
     }
 
 
