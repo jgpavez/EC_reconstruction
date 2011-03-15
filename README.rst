@@ -1,11 +1,12 @@
 EC Package
 ==========
 
-This is the development version of the EC hits detection program using a
-service oriented approach with the ClaRA framework.
+This is the development version of the EC reconstruction software using a
+service oriented approach with the ClARA framework.
 
 :Authors: S. Mancilla,
-          R. Oyarzún
+          R. Oyarzún,
+          J. Pavez
 
 :Version: 0.1
 
@@ -49,7 +50,7 @@ object, and then finds hits in the parent layer using the found peaks in its
 three views.  This composition of objects allows us to represent the detector
 in a more natural way.
 
-See the Javadoc documentation in the ``doc`` directory for more details.
+See the Javadoc documentation for more details.
 
 Services
 --------
@@ -62,36 +63,27 @@ sector object as the data that should be passed between them::
         service1 -> service2 -> service3
     fill BOS file
 
-The orchestrator will read the data for one event from the BOS file, and then
-for each of the six sectors it will start the chain of services, each one
-doing the following:
+The orchestrator reads the data for one event from the BOS file, and then for
+each of the six sectors it starts the chain of services, each one doing the
+following:
 
-* The first service will fill the information of strips using the TDC and ADC
-  data from BOS file, and the calibration data of the detector.
+* The first service fills the information of strips using the TDC and ADC data
+  from BOS file, and the calibration data of the detector.
 
-* The second service will be the main one. It will iterate over the layers of
-  the sector, to get the peaks from the strips, and then the hits from the
-  peaks.
+* The second service is the main one. It iterates over the layers of the
+  sector, to get the peaks from the strips, and then the hits from the peaks.
   
-* The third service will match the hits between the layers in the sector.
+* The third service matches the hits between the layers in the sector.
 
-Finally, when all the six sectors have been evaluated, the orchestrator will
-fill the BOS file with the calculated values.
-
-Install
--------
-
-The current version is still in development. To compile it, you need to setup
-the ``CLARA_HOME`` environment variable, as you can see in the ClaRA
-documentation.  Then just type in ``ant`` in your command line. It should
-compile without problem, but there is nothing to be tested or executed.
+Finally, when all the six sectors have been evaluated, the orchestrator fill
+the BOS file with the calculated values.
 
 Current status
 --------------
 
 * The data structures have been defined.  They will probably need small
-  changes in the future.  That classes just provide access to the data.  All
-  the manipulation is left to the algorithm.
+  changes in the future.  That classes just provide access to the data.  *All
+  the manipulation is left to the algorithm.*
 
 * But there is no inheritance, interfaces or abstract classes defined yet.
   The idea is to extract the general information and move it to base classes.
@@ -102,13 +94,14 @@ Current status
   one is too simple, and the second one could be split in other services.  We
   need to run tests and evaluate the performance.
 
-* Just the second service can be found in the ``services`` package.  We are
-  writing the other ones, but that is a relatively easy task, so they should
-  be finished in a couple of days.  The second service has also some sections
-  not implemented yet.
+* We are developing the code to get the calibration data.
 
-* We need to get the calibration data yet.  There is no implementation for it.
+* We have to figure out how to read the BOS file yet.
 
-* We are defining some XML structure to store the data from the BOS file, so
-  an external application read the BOS, create the XML file and then our
-  java application uses that XML as its input data.
+Install
+-------
+
+The current version is still in development. To compile it, you need to setup
+the ``CLARA_HOME`` environment variable, as you can see in the ClaRA
+documentation.  Then just type in ``ant`` in your command line. It should
+compile without problem, but there is nothing to be tested or executed.
