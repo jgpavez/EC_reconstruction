@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="EC" basedir="." default="compile">
+<project name="EC" basedir="." default="jar">
 	<property name="build.dir" value="build" />
 	<property name="src.dir" value="src" />
 	<property name="lib.dir" value="lib" />
@@ -10,15 +10,18 @@
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
-	<target description="Creates temporary directories" name="init">
+	<target name="init" description="Creates temporary directories" >
 		<mkdir dir="${build.dir}/classes" />
-	</target>
-	<target depends="init" description="Removes temporary directories" name="clean">
-		<delete dir="${build.dir}" />
 	</target>
 	<target name="compile" depends="init">
 		<javac srcdir="${src.dir}" destdir="${build.dir}/classes" includeAntRuntime="no" verbose="true" >
 			<classpath refid="ec.classpath" />
 		</javac>
+	</target>
+    <target name="jar" depends="compile" description="build jar file">
+        <jar destfile="EC.jar" basedir="${build.dir}/classes"/>
+    </target>
+	<target name="clean" depends="init" description="Removes temporary directories" >
+		<delete dir="${build.dir}" />
 	</target>
 </project>
