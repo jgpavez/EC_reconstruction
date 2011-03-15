@@ -28,7 +28,8 @@ public class ECCalibrationDataArray
             extends ConcurrentHashMap<Integer, ECCalibrationData>
             implements Serializable
 {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4859368109715439088L;
+
 
     /**
      * Convert a Evio event into a CalibrationDataArray object.

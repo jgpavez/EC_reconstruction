@@ -21,7 +21,7 @@ import org.ec.detector.ECView;
  */
 public class ECCalibrationData implements Serializable
 {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5344313404052094516L;
 
     private int stripID;
     private ECLayer.Name layer;
