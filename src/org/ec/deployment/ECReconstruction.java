@@ -8,6 +8,7 @@ import org.jlab.coda.cMsg.cMsgCallbackAdapter;
 import org.jlab.coda.cMsg.cMsgMessage;
 import org.jlab.coda.clara.core.CServiceRegistration;
 import org.jlab.coda.clara.core.ClaraUser;
+import org.jlab.coda.clara.system.ABase;
 import org.jlab.coda.clara.system.AConstants;
 
 
@@ -144,7 +145,9 @@ public class ECReconstruction extends ClaraUser
                     if (msg.getByteArray() == null) {
                         System.out.println("Null data");
                     }
-                    ECSector sector = (ECSector) me.B2O(msg.getByteArray());
+
+                    ABase base = new ABase();
+                    ECSector sector = (ECSector) base.B2O(msg.getByteArray());
                     System.out.println(" Callback received of sector " + sector.getID());
                     detector.set(sector.getID() - 1, sector);
                     recOutputs++;
