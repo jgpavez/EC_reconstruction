@@ -12,119 +12,115 @@ import org.jlab.coda.clara.core.CServiceParameter;
 import org.jlab.coda.clara.core.ICService;
 
 /**
- * 
- * The <code>ECCalibrationService</code> service load the calibration data for the EC.
- * This service create a <code>ECCalibrationDataArray</code> object and fill it with 
- * CalibrationData objects for each strip, layer, view and sector.
- * After that call the ECAdcCalibration, ECAttenCalibration and the ECTdcCalibration
- * classes to load and calculate the calibration data. Each of this classes are called 
- * in parallel, because each one modify only part of the ECCalibrationDataArray
- * object.
+ * The <code>ECCalibrationService</code> service load the calibration data for
+ * the EC. This service create a <code>ECCalibrationDataArray</code> object and
+ * fill it with CalibrationData objects for each strip, layer, view and sector.
+ * After that call the ECAdcCalibration, ECAttenCalibration and the
+ * ECTdcCalibration classes to load and calculate the calibration data. Each of
+ * this classes are called in parallel, because each one modify only part of the
+ * ECCalibrationDataArray object.
+ * <p>
  * When the calibration is loaded returns a CalibratoinDataArray object.
  * Still not working like service.
- * TODO
- *  
+ * <p>
  * <font size = 1>JSA: Thomas Jefferson National Accelerator Facility<br>
  * This software was developed under a United States Government license,<br>
  * described in the NOTICE file included as part of this distribution.<br>
- * Copyright (c), Feb 15, 2011</font>
- * 
- * @author jgpavez
+ * Copyright (c), March 14, 2011</font>
  *
+ * @author jgpavez
+ * @version 0.1
  */
 public class ECCalibrationService implements ICService
 {
+    public void configure(CServiceParameter arg0)
+    {
+        // TODO Auto-generated method stub
+    }
 
-	@Override
-	public void configure(CServiceParameter arg0)
-	{
-		// TODO Auto-generated method stub
+    public Object executeService(int arg0, Object arg1)
+    {
+        ECCalibrationDataArray calibrationArray = new ECCalibrationDataArray();
 
-	}
+        for (int sector = 0; sector < ECGeneral.MAX_SECTORS; sector++) {
+            for (ECLayerName layer: ECLayerName.values()) {
+                for (ECViewLabel view: ECViewLabel.values()) {
+                    for (int strip = 0; strip < ECGeneral.MAX_STRIPS; strip++) {
+                        calibrationArray.putIfAbsent(calibrationArray.getKey(strip, layer, view,sector), new ECCalibrationData(strip, layer, view, sector));
+                    }
+                }
+            }
+        }
 
-	@Override
-	public Object executeService(int arg0, Object arg1)
-	{
-		ECCalibrationDataArray calibrationArray = new ECCalibrationDataArray(); 
-		
-		for ( int sector = 0; sector < ECGeneral.MAX_SECTORS; sector++ ){
-			for ( ECLayerName layer: ECLayerName.values()){
-				for ( ECViewLabel view: ECViewLabel.values() ){
-					for ( int strip = 0; strip < ECGeneral.MAX_STRIPS; strip++ ){
-						calibrationArray.putIfAbsent(calibrationArray.getKey(strip, layer, view,sector), new ECCalibrationData(strip, layer, view, sector));
-					}
-				}
-			}
-		}
-			
-		Thread adcCalibration   	= new Thread( new ECAdcCalibration( calibrationArray )	);
-		Thread tdcCalibration   	= new Thread( new ECTdcCalibration( calibrationArray )	);
-		Thread attenCalibration 	= new Thread( new ECAttenCalibration( calibrationArray ));
-		
-		System.out.println( " Starting calibration Process ");
-		adcCalibration.start();
-		tdcCalibration.start();
-		attenCalibration.start();
-		
-		while ( adcCalibration.isAlive() || tdcCalibration.isAlive() || attenCalibration.isAlive() );
-		
-		return calibrationArray;
-	}
+        Thread adcCalibration   = new Thread(new ECAdcCalibration(calibrationArray));
+        Thread tdcCalibration   = new Thread(new ECTdcCalibration(calibrationArray));
+        Thread attenCalibration = new Thread(new ECAttenCalibration(calibrationArray));
 
-	@Override
-	public Object executeService(int[] arg0, Object[] arg1)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+        System.out.println("Starting calibration Process");
+        adcCalibration.start();
+        tdcCalibration.start();
+        attenCalibration.start();
 
-	@Override
-	public String getAuthor()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+        while (adcCalibration.isAlive() || tdcCalibration.isAlive() || attenCalibration.isAlive()) {
+            // Wait.
+        }
 
-	@Override
-	public String getDescription()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+        return calibrationArray;
+    }
 
-	@Override
-	public int getInputType()
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
-	@Override
-	public int[] getInputTypes()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Object executeService(int[] arg0, Object[] arg1)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public String getName()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public int getOutputType()
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    public String getAuthor()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public String getVersion()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
 
+    public String getDescription()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public int getInputType()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public int[] getInputTypes()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public String getName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public int getOutputType()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public String getVersion()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
