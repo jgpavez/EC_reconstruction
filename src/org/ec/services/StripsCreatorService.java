@@ -34,7 +34,7 @@ public class StripsCreatorService implements ICService
     public Object executeService(int arg0, Object arg1)
     {
         ECSector sector = (ECSector) arg1;
-        ArrayList<ECLayer> layers = (ArrayList<ECLayer>) sector.getLayerList();
+        ArrayList<ECLayer> layers = new ArrayList<ECLayer>(sector.getLayerList());
 
         // For each one of the layers INNER, OUTER and COVER
         for (ECLayer layer : layers.subList(1, layers.size())) {
