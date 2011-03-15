@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd ../build/classes
-export CLASSPATH=$CLARA_HOME/Clara-1.3.1.jar:$CLARA_HOME/lib/cMsg-3.1.jar:.
+# CLARA_SERVICES should be <your path to EC>/build/classes
+export CLASSPATH=$CLARA_HOME/Clara-1.3.1.jar:$CLARA_HOME/lib/cMsg-3.2.jar:$CLARA_SERVICES/.
 
 $JAVA_HOME/bin/java org.ec.deployment.ECReconstruction
