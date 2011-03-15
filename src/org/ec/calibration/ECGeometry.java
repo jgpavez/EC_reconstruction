@@ -1,8 +1,8 @@
 package org.ec.calibration;
 
 import org.ec.detector.ECGeneral;
-import org.ec.detector.ECLayerName;
-import org.ec.detector.ECViewLabel;
+import org.ec.detector.ECLayer;
+import org.ec.detector.ECView;
 
 /**
  * The <code>ECGeometry</code> class, encapsulate the geometry data of EC for
@@ -70,10 +70,10 @@ public class ECGeometry
         // Set Default
         double[] surf = new double[4];
 
-        surf[ECLayerName.WHOLE.ordinal()] = ECGeometry.wholeSurf;
-        surf[ECLayerName.INNER.ordinal()] = ECGeometry.innerSurf;
-        surf[ECLayerName.OUTER.ordinal()] = ECGeometry.outerSurf;
-        surf[ECLayerName.COVER.ordinal()] = ECGeometry.coverSurf;
+        surf[ECLayer.Name.WHOLE.ordinal()] = ECGeometry.wholeSurf;
+        surf[ECLayer.Name.INNER.ordinal()] = ECGeometry.innerSurf;
+        surf[ECLayer.Name.OUTER.ordinal()] = ECGeometry.outerSurf;
+        surf[ECLayer.Name.COVER.ordinal()] = ECGeometry.coverSurf;
 
         // What is CStep?
         bsc_r      =   510.32;
@@ -103,7 +103,7 @@ public class ECGeometry
         }
 
         // CALL EC_READ_ECCG
-        for (ECLayerName layer : ECLayerName.values()) {
+        for (ECLayer.Name layer : ECLayer.Name.values()) {
             double ylow = this.ylow - this.dylow * (surf[layer.ordinal()] - 1);
             double yhi  = this.yhi  + this.dyhi * (surf[layer.ordinal()] - 1);
             double xlow = (ylow - yhi) / tgrho;
@@ -117,9 +117,9 @@ public class ECGeometry
             bscLayer[layer.ordinal()].setH2(yhi);
 
             for (int j = 0; j < 6; j++) {
-                edge_L[ECViewLabel.U.ordinal()][layer.ordinal()][j] = Math.sqrt(Math.pow(xlow, 2) + Math.pow(yhi - ylow, 2));
-                edge_L[ECViewLabel.V.ordinal()][layer.ordinal()][j] = Math.sqrt(Math.pow(xlow - xhi,2));
-                edge_L[ECViewLabel.W.ordinal()][layer.ordinal()][j] = Math.sqrt(Math.pow(xhi,2) + Math.pow(yhi - ylow, 2));
+                edge_L[ECView.Label.U.ordinal()][layer.ordinal()][j] = Math.sqrt(Math.pow(xlow, 2) + Math.pow(yhi - ylow, 2));
+                edge_L[ECView.Label.V.ordinal()][layer.ordinal()][j] = Math.sqrt(Math.pow(xlow - xhi,2));
+                edge_L[ECView.Label.W.ordinal()][layer.ordinal()][j] = Math.sqrt(Math.pow(xhi,2) + Math.pow(yhi - ylow, 2));
             }
         }
 

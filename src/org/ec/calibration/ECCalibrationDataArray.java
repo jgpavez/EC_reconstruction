@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.ec.detector.ECGeneral;
-import org.ec.detector.ECLayerName;
-import org.ec.detector.ECViewLabel;
+import org.ec.detector.ECLayer;
+import org.ec.detector.ECView;
 import org.jlab.coda.jevio.EvioEvent;
 
 
@@ -66,7 +66,7 @@ public class ECCalibrationDataArray
      * @param view
      * @return
      */
-    public Integer getKey(int stripID, ECLayerName layer, ECViewLabel view , int sectorID)
+    public Integer getKey(int stripID, ECLayer.Name layer, ECView.Label view , int sectorID)
     {
         return new Integer( stripID +
                           ( ECGeneral.MAX_STRIPS * layer.ordinal() ) +
@@ -84,7 +84,7 @@ public class ECCalibrationDataArray
      * @param view
      * @return
      */
-    public ECCalibrationData getData(int stripID, ECLayerName layer, ECViewLabel view, int sectorID)
+    public ECCalibrationData getData(int stripID, ECLayer.Name layer, ECView.Label view, int sectorID)
     {
         return this.get(getKey(stripID, layer, view, sectorID));
     }

@@ -5,9 +5,9 @@ import org.ec.calibration.ECAttenCalibration;
 import org.ec.calibration.ECCalibrationData;
 import org.ec.calibration.ECCalibrationDataArray;
 import org.ec.calibration.ECTdcCalibration;
-import org.ec.detector.ECLayerName;
-import org.ec.detector.ECViewLabel;
 import org.ec.detector.ECGeneral;
+import org.ec.detector.ECLayer;
+import org.ec.detector.ECView;
 import org.jlab.coda.clara.core.CServiceParameter;
 import org.jlab.coda.clara.core.ICService;
 
@@ -43,8 +43,8 @@ public class ECCalibrationService implements ICService
         ECCalibrationDataArray calibrationArray = new ECCalibrationDataArray();
 
         for (int sector = 0; sector < ECGeneral.MAX_SECTORS; sector++) {
-            for (ECLayerName layer: ECLayerName.values()) {
-                for (ECViewLabel view: ECViewLabel.values()) {
+            for (ECLayer.Name layer: ECLayer.Name.values()) {
+                for (ECView.Label view: ECView.Label.values()) {
                     for (int strip = 0; strip < ECGeneral.MAX_STRIPS; strip++) {
                         calibrationArray.putIfAbsent(calibrationArray.getKey(strip, layer, view,sector), new ECCalibrationData(strip, layer, view, sector));
                     }

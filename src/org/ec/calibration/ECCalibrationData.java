@@ -3,9 +3,8 @@ package org.ec.calibration;
 import java.io.Serializable;
 
 import org.ec.detector.ECGeneral;
-import org.ec.detector.ECLayerName;
+import org.ec.detector.ECLayer;
 import org.ec.detector.ECView;
-import org.ec.detector.ECViewLabel;
 
 /**
  * The <code> ECCalibrationData </code> class encapsulate the calibration data
@@ -25,8 +24,8 @@ public class ECCalibrationData implements Serializable
     private static final long serialVersionUID = 1L;
 
     private int stripID;
-    private ECLayerName layer;
-    private ECViewLabel view;
+    private ECLayer.Name layer;
+    private ECView.Label view;
     private int sectorID;
 
     private double ech;
@@ -50,7 +49,7 @@ public class ECCalibrationData implements Serializable
      * @param view
      * @param sector
      */
-    public ECCalibrationData(int strip, ECLayerName layer, ECViewLabel view, int sector)
+    public ECCalibrationData(int strip, ECLayer.Name layer, ECView.Label view, int sector)
     {
         this.stripID  = strip;
         this.layer    = layer;
@@ -90,7 +89,7 @@ public class ECCalibrationData implements Serializable
     /**
      * @return the layer
      */
-    public ECLayerName getLayer()
+    public ECLayer.Name getLayer()
     {
         return layer;
     }
@@ -99,7 +98,7 @@ public class ECCalibrationData implements Serializable
     /**
      * @param layer the layer to set
      */
-    public void setLayer(ECLayerName layer)
+    public void setLayer(ECLayer.Name layer)
     {
         this.layer = layer;
     }
@@ -108,7 +107,7 @@ public class ECCalibrationData implements Serializable
     /**
      * @return the ecCoord
      */
-    public ECViewLabel getView()
+    public ECView.Label getView()
     {
         return view;
     }
@@ -117,7 +116,7 @@ public class ECCalibrationData implements Serializable
     /**
      * @param ecCoord the ecCoord to set
      */
-    public void setView(ECViewLabel view)
+    public void setView(ECView.Label view)
     {
         this.view = view;
     }
