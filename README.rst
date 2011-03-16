@@ -99,8 +99,12 @@ Install
 The current version is still in development. To compile it, you need to setup
 the ``CLARA_HOME`` environment variable, as you can see in the ClARA
 documentation.  Then just type in ``ant`` in your command line. It should
-compile without problem.
+compile without problem, and a jar file will be created in the root directory
+of the repository.
 
 To run the orchestrator, you should set your ``CLARA_SERVICES`` variable to
 ``your-path-to-ec/build/classes``, start the CLARA platform and then run the
 wrapper located in ``bin/``.
+
+The ``EC.jar`` file created by the compilation should be in your
+``CLASSPATH``.
