@@ -1,27 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="EC" basedir="." default="jar">
+
+	<!-- Compiler options -->
+	<property name="compiler.debug" value="on"/>
+	<property name="compiler.generate.no.warnings" value="off"/>
+	<property name="compiler.args" value=""/>
+	<property name="compiler.max.memory" value="128m"/>
+
+	<!-- JDK definitions -->
+	<property name="jdk.bin.1.6" value="${jdk.home.1.6}/bin"/>
+	<path id="jdk.classpath.1.6">
+		<fileset dir="${jdk.home.1.6}">
+			<include name="jre/lib/resources.jar"/>
+			<include name="jre/lib/jsse.jar"/>
+			<include name="jre/lib/javaws.jar"/>
+			<include name="jre/lib/deploy.jar"/>
+			<include name="jre/lib/management-agent.jar"/>
+			<include name="jre/lib/plugin.jar"/>
+			<include name="jre/lib/jce.jar"/>
+			<include name="jre/lib/charsets.jar"/>
+			<include name="jre/lib/rt.jar"/>
+			<include name="jre/lib/ext/sunpkcs11.jar"/>
+			<include name="jre/lib/ext/localedata.jar"/>
+			<include name="jre/lib/ext/sunjce_provider.jar"/>
+			<include name="jre/lib/ext/dnsns.jar"/>
+		</fileset>
+	</path>
+
+	<property name="project.jdk.home" value="${jdk.home.1.6}"/>
+	<property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+	<property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+
+	<!-- EC definitions -->
 	<property name="build.dir" value="build" />
 	<property name="src.dir" value="src" />
 	<property name="lib.dir" value="lib" />
 	<property name="test.dir" value="src" />
-	<property name="compiler.debug" value="on"/>
+
+
 	<path id="ec.classpath">
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
+
 	<target name="init" description="Creates temporary directories" >
 		<mkdir dir="${build.dir}/classes" />
 	</target>
+
 	<target name="compile" depends="init">
 		<javac srcdir="${src.dir}" destdir="${build.dir}/classes" includeAntRuntime="no" verbose="true" >
 			<classpath refid="ec.classpath" />
 		</javac>
 	</target>
-    <target name="jar" depends="compile" description="build jar file">
-        <jar destfile="EC.jar" basedir="${build.dir}/classes"/>
-    </target>
-	<target name="clean" depends="init" description="Removes temporary directories" >
+
+	<target name="jar" depends="compile" description="build jar file">
+		<jar destfile="EC.jar" basedir="${build.dir}/classes" update="true" />
+	</target>
+
+	<target name="clean" description="Removes temporary directories" >
+		<delete file="EC.jar"/>
 		<delete dir="${build.dir}" />
 	</target>
+
 </project>
