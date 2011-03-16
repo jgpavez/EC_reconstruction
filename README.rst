@@ -81,27 +81,26 @@ the BOS file with the calculated values.
 Current status
 --------------
 
-* The data structures have been defined.  They will probably need small
-  changes in the future.  That classes just provide access to the data.  *All
-  the manipulation is left to the algorithm.*
+* The main services have been created.  But probably the first one is too
+  simple, and the second one could be split in other services.  We need to run
+  tests and evaluate the performance.
 
-* But there is no inheritance, interfaces or abstract classes defined yet.
-  The idea is to extract the general information and move it to base classes.
-  We need help to define that, because we don't have an idea of the other
-  kinds of applications or analysis that could use our data structures.
-
-* As said above, the services have been established.  But probably the first
-  one is too simple, and the second one could be split in other services.  We
-  need to run tests and evaluate the performance.
+* The orchestrator is finished.  You can test it and see the services running
+  in the CLARA platform. But there is no data to test the services, because
+  we can not read the BOS file yet.
 
 * We are developing the code to get the calibration data.
 
-* We have to figure out how to read the BOS file yet.
+* We have to figure out how to read the BOS file.
 
 Install
 -------
 
 The current version is still in development. To compile it, you need to setup
-the ``CLARA_HOME`` environment variable, as you can see in the ClaRA
+the ``CLARA_HOME`` environment variable, as you can see in the ClARA
 documentation.  Then just type in ``ant`` in your command line. It should
-compile without problem, but there is nothing to be tested or executed.
+compile without problem.
+
+To run the orchestrator, you should set your ``CLARA_SERVICES`` variable to
+``your-path-to-ec/build/classes``, start the CLARA platform and then run the
+wrapper located in ``bin/``.
