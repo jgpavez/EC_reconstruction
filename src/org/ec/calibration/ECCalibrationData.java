@@ -8,7 +8,7 @@ import org.ec.detector.ECView;
 
 /**
  * The <code> ECCalibrationData </code> class encapsulate the calibration data
- * for a strip, in a layer, in a view, in a sector. Also define the default
+ * for a strip, in a layer, in a view. Also define the default
  * values for the calibration variables
  * <p>
  * <font size = 1>JSA: Thomas Jefferson National Accelerator Facility<br>
@@ -26,7 +26,6 @@ public class ECCalibrationData implements Serializable
     private int stripID;
     private ECLayer.Name layer;
     private ECView.Label view;
-    private int sectorID;
 
     private double ech;
     private double eo;
@@ -41,20 +40,19 @@ public class ECCalibrationData implements Serializable
 
 
     /**
-     * Construct a calibration object for a single strip, layer, view and
-     * sector.  Also define the default values for the calibration object
+     * Construct a calibration object for a single strip, layer and view.
+     * Also define the default values for the calibration object
      *
      * @param strip
      * @param layer
      * @param view
      * @param sector
      */
-    public ECCalibrationData(int strip, ECLayer.Name layer, ECView.Label view, int sector)
+    public ECCalibrationData(int strip, ECLayer.Name layer, ECView.Label view)
     {
         this.stripID  = strip;
         this.layer    = layer;
         this.view     = view;
-        this.sectorID = sector;
 
         // Set Default values
         eo          =   0.0;
@@ -119,25 +117,6 @@ public class ECCalibrationData implements Serializable
     public void setView(ECView.Label view)
     {
         this.view = view;
-    }
-
-
-    /**
-     * @return
-     */
-    public int getSectorID()
-    {
-        return sectorID;
-    }
-
-
-
-    /**
-     * @param sectorID
-     */
-    public void setSectorID(int sectorID)
-    {
-        this.sectorID = sectorID;
     }
 
     /**

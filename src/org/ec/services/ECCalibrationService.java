@@ -10,6 +10,7 @@ import org.ec.detector.ECLayer;
 import org.ec.detector.ECView;
 import org.jlab.coda.clara.core.CServiceParameter;
 import org.jlab.coda.clara.core.ICService;
+import org.jlab.coda.clara.system.AConstants;
 
 /**
  * The <code>ECCalibrationService</code> service load the calibration data for
@@ -40,87 +41,84 @@ public class ECCalibrationService implements ICService
 
     public Object executeService(int arg0, Object arg1)
     {
-        ECCalibrationDataArray calibrationArray = new ECCalibrationDataArray();
-
-        for (int sector = 0; sector < ECGeneral.MAX_SECTORS; sector++) {
+    	System.out.println("Starting calibration loader... ");
+    	ECCalibrationDataArray[] dataArray = new ECCalibrationDataArray[ECGeneral.MAX_SECTORS];
+    	for ( int sector = 0; sector < ECGeneral.MAX_SECTORS; sector++ ){
+    		ECCalibrationDataArray calibrationArray = new ECCalibrationDataArray( sector );
+        
             for (ECLayer.Name layer: ECLayer.Name.values()) {
                 for (ECView.Label view: ECView.Label.values()) {
                     for (int strip = 0; strip < ECGeneral.MAX_STRIPS; strip++) {
-                        calibrationArray.putIfAbsent(calibrationArray.getKey(strip, layer, view,sector), new ECCalibrationData(strip, layer, view, sector));
+                        calibrationArray.putIfAbsent(calibrationArray.getKey(strip, layer, view), new ECCalibrationData(strip, layer, view ));
                     }
                 }
             }
-        }
+            // TODO: Problem Thread inside service?
+            Thread adcCalibration   = new Thread(new ECAdcCalibration(calibrationArray));
+            Thread tdcCalibration   = new Thread(new ECTdcCalibration(calibrationArray));
+            Thread attenCalibration = new Thread(new ECAttenCalibration(calibrationArray));
 
-        Thread adcCalibration   = new Thread(new ECAdcCalibration(calibrationArray));
-        Thread tdcCalibration   = new Thread(new ECTdcCalibration(calibrationArray));
-        Thread attenCalibration = new Thread(new ECAttenCalibration(calibrationArray));
+            System.out.println("Starting calibration Process");
+            adcCalibration.start();
+            tdcCalibration.start();
+            attenCalibration.start();
 
-        System.out.println("Starting calibration Process");
-        adcCalibration.start();
-        tdcCalibration.start();
-        attenCalibration.start();
-
-        while (adcCalibration.isAlive() || tdcCalibration.isAlive() || attenCalibration.isAlive()) {
+            while (adcCalibration.isAlive() || tdcCalibration.isAlive() || attenCalibration.isAlive()) {
             // Wait.
-        }
-
-        return calibrationArray;
+            }
+        
+            dataArray[sector] = calibrationArray;
+    	
+    	}
+        System.out.println(" Calibration Process finish...");
+        return dataArray;
     }
 
 
     public Object executeService(int[] arg0, Object[] arg1)
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
 
     public String getAuthor()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "jgpavez";
     }
 
 
     public String getDescription()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "Load the Calibration Data";
     }
 
 
     public int getInputType()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return AConstants.OBJECT;
     }
 
 
     public int[] getInputTypes()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
 
     public String getName()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "ECCalibrationService";
     }
 
 
     public int getOutputType()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return AConstants.OBJECT_ARRAY;
     }
 
 
     public String getVersion()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "0.1";
     }
 }

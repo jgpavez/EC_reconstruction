@@ -1,5 +1,7 @@
 package org.ec.calibration;
 
+import java.io.Serializable;
+
 import org.ec.detector.ECGeneral;
 import org.ec.detector.ECLayer;
 import org.ec.detector.ECView;
@@ -17,9 +19,11 @@ import org.ec.detector.ECView;
  * @author      jgpavez
  * @version     0.1
  */
-public class ECGeometry
+public class ECGeometry implements Serializable
 {
-    // Tcl Varibles
+
+	private static final long serialVersionUID = -7552644838582831241L;
+	// Tcl Varibles
     public static int       wholeSurf = 16;
     public static int       innerSurf = 1;
     public static int       outerSurf = 16;
@@ -501,9 +505,11 @@ public class ECGeometry
     *
     * @author      jgpavez
     */
-    public static class ECBscSector
+    public static class ECBscSector implements Serializable
     {
-        private double phi;
+
+		private static final long serialVersionUID = 3828937390991049108L;
+		private double phi;
         private double x;
         private double y;
         private double z;
@@ -605,9 +611,12 @@ public class ECGeometry
     *
     * @author      jgpavez
     */
-    public static class ECBscLayer
+    public static class ECBscLayer implements Serializable
     {
-        private double depth;
+
+		private static final long serialVersionUID = -6479451403957066410L;
+	
+		private double depth;
         private double h;
         private double h1;
         private double h2;

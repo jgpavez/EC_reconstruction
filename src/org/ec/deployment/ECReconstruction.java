@@ -60,7 +60,7 @@ public class ECReconstruction extends ClaraUser
     public void runReconstruction()
     {
         readBOS();
-
+        // TODO: CALIBRACION DEL SECTOR
         for (ECSector sector : detector) {
             requestService(container, fillStrips, sector, sector.getID());
             System.out.println("Started chain for sector " + sector.getID());
@@ -99,6 +99,7 @@ public class ECReconstruction extends ClaraUser
         serviceList.add(findHits);
         serviceList.add(findMatches);
 
+        // TODO revisar
         TIME_OUT_LIMIT = 40;
         timeout = 0;
         boolean allFound = false;

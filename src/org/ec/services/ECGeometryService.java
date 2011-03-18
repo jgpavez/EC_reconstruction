@@ -3,6 +3,7 @@ package org.ec.services;
 import org.ec.calibration.ECGeometry;
 import org.jlab.coda.clara.core.CServiceParameter;
 import org.jlab.coda.clara.core.ICService;
+import org.jlab.coda.clara.system.AConstants;
 
 /**
  * The <code>ECGeometryService</code> service, load the geometry data
@@ -32,6 +33,7 @@ public class ECGeometryService implements ICService
 	@Override
 	public Object executeService(int arg0, Object arg1)
 	{
+		System.out.println(" Starting geometry loader...");
 		ECGeometry geometry = new ECGeometry();
 		return geometry;
 	}
@@ -39,57 +41,49 @@ public class ECGeometryService implements ICService
 	@Override
 	public Object executeService(int[] arg0, Object[] arg1)
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getAuthor()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return "jgpavez";
 	}
 
 	@Override
 	public String getDescription()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return "Load geometry";
 	}
 
 	@Override
 	public int getInputType()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return AConstants.OBJECT;
 	}
 
 	@Override
 	public int[] getInputTypes()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getName()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return "ECGeometryService";
 	}
 
 	@Override
 	public int getOutputType()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return AConstants.OBJECT;
 	}
 
 	@Override
 	public String getVersion()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return "0.1";
 	}
 
 }
