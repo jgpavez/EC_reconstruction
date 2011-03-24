@@ -51,17 +51,17 @@ public class TestCalibration extends ClaraUser
 					return;
 				}
 				// TODO: Solve how to get a object array
-/*				try{
-					Object[] calibrationObj = base.B2O((byte[])requestAndGetService(getContainer(serviceName2,false),serviceName2, null, 1000000));
-					ECCalibrationDataArray calibration = (ECCalibrationDataArray)calibrationObj;
+				try{
+					Object calibrationObj = base.B2O((byte[])requestAndGetService(getContainer(serviceName2,false),serviceName2, null, 1000000));
+					ECCalibrationDataArray[] calibration = (ECCalibrationDataArray[])calibrationObj;
 					for (int sector = 0; sector < ECGeneral.MAX_SECTORS; sector++) {
 						for (ECLayer.Name layer: ECLayer.Name.values()) {
 							for (ECView.Label view: ECView.Label.values()) {
 								for (int strip = 0; strip < ECGeneral.MAX_STRIPS; strip++) {
-									System.out.println(" ech:   " + Double.toString(calibration.getData(strip, layer, view).getEch()));
-									System.out.println(" atten: " + Double.toString(calibration.getData(strip, layer, view).getAtten()));
-									System.out.println(" Trms:  " + Double.toString(calibration.getData(strip, layer, view).getTrms()));
-									System.out.println(" To:    " + Double.toString(calibration.getData(strip, layer, view).getTo()));
+									System.out.println(" ech:   " + Double.toString(calibration[0].getData(strip, layer, view).getEch()));
+									System.out.println(" atten: " + Double.toString(calibration[1].getData(strip, layer, view).getAtten()));
+									System.out.println(" Trms:  " + Double.toString(calibration[2].getData(strip, layer, view).getTrms()));
+									System.out.println(" To:    " + Double.toString(calibration[3].getData(strip, layer, view).getTo()));
 								}
 							}
 						}
@@ -69,7 +69,6 @@ public class TestCalibration extends ClaraUser
 				} catch ( Exception e) {
 					e.printStackTrace();
 					return;
-				}
-	*/			
+				}	
 	}
 }
