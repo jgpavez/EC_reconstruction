@@ -32,6 +32,7 @@ import org.jlab.coda.clara.system.AConstants;
  * @author jgpavez
  * @version 0.1
  */
+
 public class ECCalibrationService implements ICService
 {
     public void configure(CServiceParameter arg0)
@@ -53,12 +54,10 @@ public class ECCalibrationService implements ICService
                     }
                 }
             }
-            // TODO: Problem Thread inside service?
             Thread adcCalibration   = new Thread(new ECAdcCalibration(calibrationArray));
             Thread tdcCalibration   = new Thread(new ECTdcCalibration(calibrationArray));
             Thread attenCalibration = new Thread(new ECAttenCalibration(calibrationArray));
 
-            System.out.println("Starting calibration Process");
             adcCalibration.start();
             tdcCalibration.start();
             attenCalibration.start();
