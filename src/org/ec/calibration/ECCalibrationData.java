@@ -23,6 +23,7 @@ public class ECCalibrationData implements Serializable
 {
     private static final long serialVersionUID = -5344313404052094516L;
 
+    private int sector;
     private int stripID;
     private ECLayer.Name layer;
     private ECView.Label view;
@@ -48,8 +49,9 @@ public class ECCalibrationData implements Serializable
      * @param view
      * @param sector
      */
-    public ECCalibrationData(int strip, ECLayer.Name layer, ECView.Label view)
+    public ECCalibrationData(int sector, int strip, ECLayer.Name layer, ECView.Label view)
     {
+    	this.setSector(sector);
         this.stripID  = strip;
         this.layer    = layer;
         this.view     = view;
@@ -321,4 +323,16 @@ public class ECCalibrationData implements Serializable
     {
         this.tdcStat = tdcStat;
     }
+
+
+	public void setSector(int sector)
+	{
+		this.sector = sector;
+	}
+
+
+	public int getSector()
+	{
+		return sector;
+	}
 }

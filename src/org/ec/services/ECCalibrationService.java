@@ -43,34 +43,31 @@ public class ECCalibrationService implements ICService
     public Object executeService(int arg0, Object arg1)
     {
     	System.out.println("Starting calibration loader... ");
-    	ECCalibrationDataArray[] dataArray = new ECCalibrationDataArray[ECGeneral.MAX_SECTORS];
+		ECCalibrationDataArray calibrationArray = new ECCalibrationDataArray();
     	for ( int sector = 0; sector < ECGeneral.MAX_SECTORS; sector++ ){
-    		ECCalibrationDataArray calibrationArray = new ECCalibrationDataArray( sector );
-        
-            for (ECLayer.Name layer: ECLayer.Name.values()) {
+    		for (ECLayer.Name layer: ECLayer.Name.values()) {
                 for (ECView.Label view: ECView.Label.values()) {
                     for (int strip = 0; strip < ECGeneral.MAX_STRIPS; strip++) {
-                        calibrationArray.putIfAbsent(calibrationArray.getKey(strip, layer, view), new ECCalibrationData(strip, layer, view ));
+                    	calibrationArray.putData(new ECCalibrationData(sector, strip, layer, view ));
                     }
                 }
             }
-            Thread adcCalibration   = new Thread(new ECAdcCalibration(calibrationArray));
-            Thread tdcCalibration   = new Thread(new ECTdcCalibration(calibrationArray));
-            Thread attenCalibration = new Thread(new ECAttenCalibration(calibrationArray));
-
-            adcCalibration.start();
-            tdcCalibration.start();
-            attenCalibration.start();
-
-            while (adcCalibration.isAlive() || tdcCalibration.isAlive() || attenCalibration.isAlive()) {
-            // Wait.
-            }
-        
-            dataArray[sector] = calibrationArray;
-    	
     	}
-        System.out.println(" Calibration Process finish...");
-        return dataArray;
+        Thread adcCalibration   = new Thread(new ECAdcCalibration(calibrationArray));
+        Thread tdcCalibration   = new Thread(new ECTdcCalibration(calibrationArray));
+        Thread attenCalibration = new Thread(new ECAttenCalibration(calibrationArray));
+        
+        adcCalibration.start();
+        tdcCalibration.start();
+        attenCalibration.start();
+            
+
+      while (adcCalibration.isAlive() || tdcCalibration.isAlive() || attenCalibration.isAlive()) {
+     // Wait.
+      }
+
+      System.out.println(" Calibration Process finish...");
+      return calibrationArray;
     }
 
 

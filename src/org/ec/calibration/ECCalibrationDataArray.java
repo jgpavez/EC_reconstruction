@@ -1,7 +1,7 @@
 package org.ec.calibration;
 
 import java.io.Serializable;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.ec.detector.ECGeneral;
 import org.ec.detector.ECLayer;
@@ -25,14 +25,15 @@ import org.jlab.coda.jevio.EvioEvent;
  *
  */
 public class ECCalibrationDataArray
-            extends ConcurrentHashMap<Integer, ECCalibrationData>
+            extends ConcurrentSkipListMap<Integer, ECCalibrationData>
 {
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 8630426028518793089L;
+	
+	private static double MAX_DATA = ECGeneral.MAX_SECTORS * 3 * 4 * ECGeneral.MAX_STRIPS;
 
-	private int sector;
 
 	/**
      * Convert a Evio event into a CalibrationDataArray object.
@@ -71,16 +72,16 @@ public class ECCalibrationDataArray
      * @return
      */
 	
-	public ECCalibrationDataArray( int sector ){
+	public ECCalibrationDataArray(){
 		super();
-		this.sector = sector;
 	}
 	
-    public Integer getKey(int stripID, ECLayer.Name layer, ECView.Label view )
+    public Integer getKey(int sector, int stripID, ECLayer.Name layer, ECView.Label view )
     {
         return new Integer( stripID +
-                          ( ECGeneral.MAX_STRIPS * layer.ordinal() ) +
-                          ( ECGeneral.MAX_STRIPS * 4 * view.ordinal() ));
+                          ( ECGeneral.MAX_STRIPS * view.ordinal() ) +
+                          ( ECGeneral.MAX_STRIPS * 3 * layer.ordinal() ) + 
+                          ( ECGeneral.MAX_STRIPS * 3 * 4 * sector ));
     }
 
 
@@ -93,9 +94,9 @@ public class ECCalibrationDataArray
      * @param view
      * @return
      */
-    public ECCalibrationData getData(int stripID, ECLayer.Name layer, ECView.Label view)
+    public ECCalibrationData getData(int sector, int stripID, ECLayer.Name layer, ECView.Label view)
     {
-        return this.get(getKey(stripID, layer, view));
+        return this.get(getKey(sector, stripID, layer, view));
     }
 
 
@@ -109,20 +110,11 @@ public class ECCalibrationDataArray
      */
     public boolean putData(ECCalibrationData input)
     {
-        ECCalibrationData result = this.put(getKey(input.getStripID(), input.getLayer(), input.getView()), input );
+        ECCalibrationData result = this.put(getKey(input.getSector(), input.getStripID(), input.getLayer(), input.getView()), input );
 
         if (result == null)
             return false;
         else
             return true;
     }
-
-	/**
-	 * Return the sector for this Array of Calibration
-	 * @return
-	 */
-	public int getSector()
-	{
-		return sector;
-	}
 }
